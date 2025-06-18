@@ -26,8 +26,8 @@
             try {
                 const res = await fetch('https://mpalves.app.n8n.cloud/webhook-test/d1939564-6a0a-4b24-b69e-ece55c9a03d3', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ texto })
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: texto
                 });
                 if (res.ok) {
                     msgDiv.textContent = 'Texto enviado com sucesso!';
