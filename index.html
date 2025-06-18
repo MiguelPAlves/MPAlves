@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Enviar Texto para Webhook</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        input, textarea, button { display: block; margin: 10px 0; width: 100%; max-width: 400px; }
+        .msg { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Enviar Texto para Webhook</h1>
+    <form id="webhookForm">
+        <label for="texto">Digite seu texto:</label>
+        <textarea id="texto" name="texto" rows="4" required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+    <div class="msg" id="msg"></div>
+    <script>
+        document.getElementById('webhookForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const texto = document.getElementById('texto').value;
+            const msgDiv = document.getElementById('msg');
+            msgDiv.textContent = 'Enviando...';
+            try {
+                const res = await fetch('https://mpalves.app.n8n.cloud/webhook-test/d1939564-6a0a-4b24-b69e-ece55c9a03d3', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ texto })
+                });
+                if (res.ok) {
+                    msgDiv.textContent = 'Texto enviado com sucesso!';
+                } else {
+                    msgDiv.textContent = 'Erro ao enviar: ' + res.statusText;
+                }
+            } catch (err) {
+                msgDiv.textContent = 'Erro: ' + err.message;
+            }
+        });
+    </script>
+</body>
+</html>
